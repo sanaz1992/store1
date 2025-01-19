@@ -11,8 +11,9 @@ class UserController extends Controller
         return view('users.index', compact('users'));
     }
 
-    public function show()
+    public function show($id = null)
     {
+        return $id;
         return view('users.show');
     }
 }
