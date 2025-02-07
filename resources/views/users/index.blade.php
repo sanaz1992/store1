@@ -12,7 +12,9 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-left">
-                        <li class="breadcrumb-item"><a href="{{route('admin.users.show',['name'=>'sanaz'])}}">خانه</a></li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('admin.dashboard') }}">خانه</a>
+                        </li>
                         <li class="breadcrumb-item active">جداول ساده</li>
                     </ol>
                 </div>
@@ -25,6 +27,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
+                    @if (session('error'))
+                        <div class="alert alert-danger">{{ session('error') }}</div>
+                    @endif
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">جدول ریسپانسیو</h3>
@@ -41,43 +46,30 @@
                             </div>
                         </div>
                         <!-- /.card-header -->
+
                         <div class="card-body table-responsive p-0">
                             <table class="table table-hover">
                                 <tr>
                                     <th>شماره</th>
                                     <th>کاربر</th>
+                                    <th>ایمیل</th>
                                     <th>تاریخ</th>
-                                    <th>وضعیت</th>
-                                    <th>دلیل</th>
+                                    <th>عملیات</th>
                                 </tr>
-                                <tr>
-                                    <td>183</td>
-                                    <td>محمد</td>
-                                    <td>11-7-2014</td>
-                                    <td><span class="badge badge-success">تایید شده</span></td>
-                                    <td>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</td>
-                                </tr>
-                                <tr>
-                                    <td>219</td>
-                                    <td>حسام</td>
-                                    <td>11-7-2014</td>
-                                    <td><span class="badge bg-danger">در حال بررسی</span></td>
-                                    <td>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</td>
-                                </tr>
-                                <tr>
-                                    <td>657</td>
-                                    <td>رضا</td>
-                                    <td>11-7-2014</td>
-                                    <td><span class="badge badge-primary">تایید شده</span></td>
-                                    <td>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</td>
-                                </tr>
-                                <tr>
-                                    <td>175</td>
-                                    <td>پرهام</td>
-                                    <td>11-7-2014</td>
-                                    <td><span class="badge badge-danger">رد شده</span></td>
-                                    <td>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</td>
-                                </tr>
+                                @forelse ($users as $user)
+                                    <tr>
+                                        <td>{{ $user->id }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->created_at }}</td>
+                                        <td><a href="{{ route('admin.users.show', ['id' => $user->id]) }}">نمایش جزئیات</a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5">هیچ کاربری ثبت نشده است</td>
+                                    </tr>
+                                @endforelse
                             </table>
                         </div>
                         <!-- /.card-body -->

@@ -7,13 +7,16 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::latest()->get();
         return view('users.index', compact('users'));
     }
 
     public function show($id = null)
     {
-        return $id;
-        return view('users.show');
+        $user = User::find($id);
+        if (! $user) {
+            return redirect()->route('admin.users.index')->with('error', 'کاربر مورد نظر یافت نشد.');
+        }
+        return view('users.show', compact('user'));
     }
 }
