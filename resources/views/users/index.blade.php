@@ -62,7 +62,16 @@
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->created_at }}</td>
-                                        <td><a href="{{ route('admin.users.show', ['id' => $user->id]) }}">نمایش جزئیات</a>
+                                        <td>
+                                            <a class="btn btn-info"
+                                                href="{{ route('admin.users.show', ['id' => $user->id]) }}">نمایش </a>
+                                            <a class="btn btn-info"
+                                                href="{{ route('admin.users.edit', ['id' => $user->id]) }}"> ویرایش</a>
+                                            <form action="{{ route('admin.users.destroy', ['id' => $user->id]) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-danger" type="submit"> حذف</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @empty
